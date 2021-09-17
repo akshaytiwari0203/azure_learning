@@ -20,11 +20,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '8'
-          
-      - name: CD to project
-        run: cd helloAzureAppService
 
       - name: Build with Maven
+        run: cd helloAzureAppService
         run: mvn clean install
 
       - name: Upload artifact for deployment job
