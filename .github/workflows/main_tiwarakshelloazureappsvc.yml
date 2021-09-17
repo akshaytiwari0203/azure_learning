@@ -20,6 +20,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: '8'
+          
+      - name: CD to project
+        run: cd helloAzureAppService
 
       - name: Build with Maven
         run: mvn clean install
@@ -28,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/target/*.jar'
+          path: '${{ github.workspace }}/helloAzureAppService/target/*.jar'
 
   deploy:
     runs-on: ubuntu-latest
