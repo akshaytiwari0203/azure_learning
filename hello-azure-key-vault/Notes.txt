@@ -1,0 +1,13 @@
+CREATE TABLE EMPLOYEE (EMP_NAME VARCHAR(100), EMP_SAL INTEGER);
+mvn clean install
+docker login
+docker build -t akstiwari/hello-azure-key-vault .
+docker images
+docker tag 68c049c0dd4e akstiwari/hello-azure-key-vault
+docker push akstiwari/hello-azure-key-vault
+
+1. Create a DB
+2. Update conn string in code
+3. Change the keyvault name
+4. Create app svc
+5. Create Managed Identity

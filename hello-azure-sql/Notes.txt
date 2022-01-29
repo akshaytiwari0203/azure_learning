@@ -1,1 +1,9 @@
 CREATE TABLE EMPLOYEE (EMP_NAME VARCHAR(100), EMP_SAL INTEGER);
+mvn clean install
+docker login
+docker build -t akstiwari/hello-azure-sql .
+docker images
+docker tag 6a06adef8e15 akstiwari/hello-azure-sql
+docker push akstiwari/hello-azure-sql
+
+Network Connectivity Method
