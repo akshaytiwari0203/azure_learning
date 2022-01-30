@@ -1,10 +1,10 @@
 CREATE TABLE EMPLOYEE (EMP_NAME VARCHAR(100), EMP_SAL INTEGER);
 mvn clean install
 docker login
-docker build -t akstiwari/hello-azure-key-vault .
+docker build -t <>/hello-azure-key-vault .
 docker images
-docker tag 68c049c0dd4e akstiwari/hello-azure-key-vault
-docker push akstiwari/hello-azure-key-vault
+docker tag 52aecd600e45 <>/hello-azure-key-vault
+docker push <>/hello-azure-key-vault
 
 1. Create a DB
 2. Update conn string in code

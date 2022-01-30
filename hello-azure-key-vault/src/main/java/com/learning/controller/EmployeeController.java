@@ -18,13 +18,21 @@ import com.azure.security.keyvault.secrets.models.KeyVaultSecret;
 @RestController
 public class EmployeeController {
 
-	// TODO: Modify to set correct key vault name
-	private String keyVaultName = "tiwarakskeyvault201";
+	// TODO: Modify to set correct jdbc url
+	private String jdbcUrl = "jdbc:sqlserver://tiwaraksdbserver.database.windows.net:1433;database=tiwaraksdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+
+	// TODO: Modify to set correct jdbc user name
+	private String jdbcUsername = "akshay@tiwaraksdbserver";
 
 	// TODO: Modify to set correct secret name
 	private String secretName = "DBPASSWORD";
 
-	@RequestMapping("get/{empName}")
+	// TODO: Modify to set correct secret name
+	private String keyVaultName = "tiwarakskv1";
+
+	private String keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
+
+	@RequestMapping("getEmp/{empName}")
 	public String getEmployee(@PathVariable("empName") String empName) {
 		System.out.println(String.format("Geting Employee %s", empName));
 
@@ -41,7 +49,7 @@ public class EmployeeController {
 		return String.format("Employee Name is %s and Salary is %s", empName, empSalDB);
 	}
 
-	@RequestMapping("create/{empName}/{empSal}")
+	@RequestMapping("createEmp/{empName}/{empSal}")
 	public String insertEmployee(@PathVariable("empName") String empName, @PathVariable("empSal") int empSal) {
 		System.out.println(String.format("Inserting Employee %s:%s", empName, empSal));
 		new JdbcTemplate(mysqlDataSource()).update("INSERT INTO EMPLOYEE (EMP_NAME,EMP_SAL) VALUES (?, ?)",
@@ -50,20 +58,19 @@ public class EmployeeController {
 	}
 
 	private DataSource mysqlDataSource() {
-		// TODO: put in your connection string here. Also put in correct username
 
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		// dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl(
-				"jdbc:sqlserver://tiwarakskeyvaultdbserver.database.windows.net:1433;database=tiwarakskeyvaultdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-		dataSource.setUsername("akshay@tiwarakskeyvaultdbserver");
+		dataSource.setUrl(jdbcUrl);
+		dataSource.setUsername(jdbcUsername);
 		dataSource.setPassword(getSecret(secretName));
 
 		return dataSource;
 	}
 
 	private String getSecret(String secretName) {
-		String keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
+
+		System.out.println(String.format("keyVaultUri %s", keyVaultUri));
 
 		SecretClient secretClient = new SecretClientBuilder().vaultUrl(keyVaultUri)
 				.credential(new DefaultAzureCredentialBuilder().build()).buildClient();
@@ -78,7 +85,6 @@ public class EmployeeController {
 	public String setSecret(@PathVariable("secretName") String secretName,
 			@PathVariable("secretValue") String secretValue) {
 		System.out.println(String.format("Get Request %s:%s", secretName, secretValue));
-		String keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
 
 		SecretClient secretClient = new SecretClientBuilder().vaultUrl(keyVaultUri)
 				.credential(new DefaultAzureCredentialBuilder().build()).buildClient();
@@ -91,7 +97,6 @@ public class EmployeeController {
 	@RequestMapping("deleteSecret/{secretName}")
 	public String deleteSecret(@PathVariable("secretName") String secretName) {
 		System.out.println(String.format("Delete Request %s", secretName));
-		String keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
 
 		SecretClient secretClient = new SecretClientBuilder().vaultUrl(keyVaultUri)
 				.credential(new DefaultAzureCredentialBuilder().build()).buildClient();
@@ -100,6 +105,13 @@ public class EmployeeController {
 		deletionPoller.waitForCompletion();
 
 		return String.format("The value of secret %s is deleted", secretName);
+	}
+
+	@RequestMapping("/")
+	public String greet() {
+		System.out.println("Greetings");
+
+		return "server is up!!!";
 	}
 
 }
