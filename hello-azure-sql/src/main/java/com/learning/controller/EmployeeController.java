@@ -37,14 +37,15 @@ public class EmployeeController {
 	}
 
 	private DataSource mysqlDataSource() {
-		// TODO: put in your connection string here. Also put in correct password and
-		// username
-		//
+		
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		// dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:sqlserver://tiwarakssqlserver.database.windows.net:1433;database=tiwarakssqldb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-		dataSource.setUsername("akshay@tiwarakssqlserver");
-		dataSource.setPassword("Password@123");
+		// TODO: put in your connection string here. Remove username and password sections
+		dataSource.setUrl("");
+		// TODO: put in your username
+		dataSource.setUsername("");
+		// TODO: put in your password
+		dataSource.setPassword("");
 
 		return dataSource;
 	}

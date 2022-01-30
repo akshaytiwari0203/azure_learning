@@ -19,16 +19,16 @@ import com.azure.security.keyvault.secrets.models.KeyVaultSecret;
 public class EmployeeController {
 
 	// TODO: Modify to set correct jdbc url
-	private String jdbcUrl = "jdbc:sqlserver://tiwaraksdbserver.database.windows.net:1433;database=tiwaraksdb;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+	private String jdbcUrl = "";
 
 	// TODO: Modify to set correct jdbc user name
-	private String jdbcUsername = "akshay@tiwaraksdbserver";
+	private String jdbcUsername = "";
 
 	// TODO: Modify to set correct secret name
-	private String secretName = "DBPASSWORD";
+	private String secretName = "";
 
 	// TODO: Modify to set correct secret name
-	private String keyVaultName = "tiwarakskv1";
+	private String keyVaultName = "";
 
 	private String keyVaultUri = "https://" + keyVaultName + ".vault.azure.net";
 
